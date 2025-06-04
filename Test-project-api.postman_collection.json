@@ -1,0 +1,1195 @@
+{
+	"info": {
+		"_postman_id": "65228f12-28d0-4387-b041-6e2cc07f934d",
+		"name": "Test-project-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38821839"
+	},
+	"item": [
+		{
+			"name": "Product Requests",
+			"item": [
+				{
+					"name": "Create Product",
+					"item": [
+						{
+							"name": "Positive Test Cases",
+							"item": [
+								{
+									"name": "Create Product",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Successful POST request\", function () {\r",
+													"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+													"});\r",
+													"pm.test(\"Your test name\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.description).to.eql(\"This is a test product added by JMeter\");\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"title\": \"Test Product 147\",\r\n  \"price\": 99,\r\n  \"description\": \"This is a test product added by JMeter\",\r\n  \"categoryId\": 1,\r\n  \"images\": [\"https://i.imgur.com/Qphac99.jpeg\"]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://api.escuelajs.co/api/v1/products",
+											"protocol": "https",
+											"host": [
+												"api",
+												"escuelajs",
+												"co"
+											],
+											"path": [
+												"api",
+												"v1",
+												"products"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Create product- Negative",
+							"item": [
+								{
+									"name": "Duplicate title",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"title\": \"Test Product 135\",\r\n  \"price\": 99,\r\n  \"description\": \"This is a test product added by JMeter\",\r\n  \"categoryId\": 1,\r\n  \"images\": [\"https://i.imgur.com/Qphac99.jpeg\"]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://api.escuelajs.co/api/v1/products",
+											"protocol": "https",
+											"host": [
+												"api",
+												"escuelajs",
+												"co"
+											],
+											"path": [
+												"api",
+												"v1",
+												"products"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "No title key value pair",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 500\", function () {\r",
+													"    pm.response.to.have.status(500);\r",
+													"});\r",
+													"\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"price\": 99,\r\n  \"description\": \"This is a test product added by JMeter\",\r\n  \"categoryId\": 1,\r\n  \"images\": [\"https://i.imgur.com/Qphac99.jpeg\"]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://api.escuelajs.co/api/v1/products",
+											"protocol": "https",
+											"host": [
+												"api",
+												"escuelajs",
+												"co"
+											],
+											"path": [
+												"api",
+												"v1",
+												"products"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Product with negative price",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"const jsonData = pm.response.json();\r",
+													"\r",
+													"pm.test(\"Response body to contain error message for price to be positive\", function(){\r",
+													"    pm.expect(jsonData.message).to.include(\"price must be a positive number\")\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"title\": \"Test Product 140\",\r\n  \"price\": -1.22,\r\n  \"description\": \"This is a test product added by postman\",\r\n  \"categoryId\": 1,\r\n  \"images\": [\"https://i.imgur.com/Qphac99.jpeg\"]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://api.escuelajs.co/api/v1/products",
+											"protocol": "https",
+											"host": [
+												"api",
+												"escuelajs",
+												"co"
+											],
+											"path": [
+												"api",
+												"v1",
+												"products"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "No description key value pair",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"title\": \"Test Product 145\",\r\n  \"price\": 99,\r\n  \"categoryId\": 1,\r\n  \"images\": [\"https://i.imgur.com/Qphac99.jpeg\"]\r\n}\r\n\r\n// \"description\": \"This is a test product added by JMeter\",",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://api.escuelajs.co/api/v1/products",
+											"protocol": "https",
+											"host": [
+												"api",
+												"escuelajs",
+												"co"
+											],
+											"path": [
+												"api",
+												"v1",
+												"products"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Product having invalid Category id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Message for Category not found to be present \", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.message).to.contain(\"Could not find any entity of type \\\"Category\\\" matching: {\\n    \\\"id\\\": 93\\n}\");\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"title\": \"Test Product 146\",\r\n  \"price\": 99,\r\n  \"description\": \"This is a test product added by JMeter\",\r\n  \"categoryId\": 93,\r\n  \"images\": [\"https://i.imgur.com/Qphac99.jpeg\"]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://api.escuelajs.co/api/v1/products",
+											"protocol": "https",
+											"host": [
+												"api",
+												"escuelajs",
+												"co"
+											],
+											"path": [
+												"api",
+												"v1",
+												"products"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Get product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"pm.test(\"Your test name\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(20);\r",
+									"    pm.expect(jsonData.title).to.eql(\"Sleek Comfort-Fit Over-Ear Headphones\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"nico@gmail.com\",\r\n  \"password\": \"1234\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api.escuelajs.co/api/v1/products/20",
+							"protocol": "https",
+							"host": [
+								"api",
+								"escuelajs",
+								"co"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get product Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"pm.test(\"Your test name\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(20);\r",
+									"    pm.expect(jsonData.title).to.eql(\"Sleek Comfort-Fit Over-Ear Headphones\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"nico@gmail.com\",\r\n  \"password\": \"1234\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api.escuelajs.co/api/v1/products/137",
+							"protocol": "https",
+							"host": [
+								"api",
+								"escuelajs",
+								"co"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"137"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code to be 200\"), function() {\r",
+									"    pm.response.to.have.status(200);    \r",
+									"}\r",
+									"\r",
+									"pm.test(\"Body is correct\", function () {\r",
+									"    pm.response.to.have.body(\"true\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Test Product 125\",\r\n  \"price\": 99,\r\n  \"description\": \"This is a test product added by JMeter\",\r\n  \"categoryId\": 1,\r\n  \"images\": [\"https://i.imgur.com/Qphac99.jpeg\"]\r\n}"
+						},
+						"url": {
+							"raw": "https://api.escuelajs.co/api/v1/products/136",
+							"protocol": "https",
+							"host": [
+								"api",
+								"escuelajs",
+								"co"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"136"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Requests",
+			"item": [
+				{
+					"name": "Creating User",
+					"item": [
+						{
+							"name": "Positive Test Cases",
+							"item": [
+								{
+									"name": "Creating a user",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code to be 201\"), function() {\r",
+													"    pm.response.to.have.status(201);\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response time is less than 500ms\", function () {\r",
+													"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body to be a JSON\"), function() {\r",
+													"    pm.response.to.have.header(\"Content-Type\")\r",
+													"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+													"}\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"NicoWilliams1\",\r\n  \"email\": \"nicowilly@gmail.com\",\r\n  \"password\": \"12345\",\r\n  \"avatar\": \"https://picsum.photos/800\",\r\n  \"hobby\" : \"testhobby\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://api.escuelajs.co/api/v1/users/",
+											"protocol": "https",
+											"host": [
+												"api",
+												"escuelajs",
+												"co"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Creating a user with empty hobby",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code to be 201\"), function() {\r",
+													"    pm.response.to.have.status(201);\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response time is less than 500ms\", function () {\r",
+													"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body to be a JSON\"), function() {\r",
+													"    pm.response.to.have.header(\"Content-Type\")\r",
+													"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+													"}\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"NicoWilliams1\",\r\n  \"email\": \"nicowilly@gmail.com\",\r\n  \"password\": \"12345\",\r\n  \"avatar\": \"https://picsum.photos/800\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://api.escuelajs.co/api/v1/users/",
+											"protocol": "https",
+											"host": [
+												"api",
+												"escuelajs",
+												"co"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												""
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"description": "This folder contains all the valid test cases that an api should return as a part of the functionality."
+						},
+						{
+							"name": "Negative Test Cases",
+							"item": [
+								{
+									"name": "CreatingUser-no_name",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Should fail when required fields are missing\", function () {\r",
+													"    pm.response.to.have.status(500);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"email\": \"nicowilly@gmail.com\",\r\n  \"password\": \"12345\",\r\n  \"avatar\": \"https://picsum.photos/800\",\r\n  \"hobby\" : \"testhobby\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://api.escuelajs.co/api/v1/users/",
+											"protocol": "https",
+											"host": [
+												"api",
+												"escuelajs",
+												"co"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "CreatingUser-no_email",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"NicoWilliams1\",\r\n  \"password\": \"12345\",\r\n  \"avatar\": \"https://picsum.photos/800\",\r\n  \"hobby\" : \"testhobby\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://api.escuelajs.co/api/v1/users/",
+											"protocol": "https",
+											"host": [
+												"api",
+												"escuelajs",
+												"co"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "CreatingUser-no_password",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\"), function(){\r",
+													"    pm.response.to.have.status(400);\r",
+													"};\r",
+													"\r",
+													"const jsonData = pm.response.json();\r",
+													"\r",
+													"pm.test(\"Message to contain less than 4 characters is not acceptable\", function(){\r",
+													"    pm.expect(jsonData.message).to.include(\"password must be longer than or equal to 4 characters\")\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"NicoWilliams1\",\r\n  \"email\": \"nicowilly@gmail.com\",\r\n  \"avatar\": \"https://picsum.photos/800\",\r\n  \"hobby\" : \"testhobby\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://api.escuelajs.co/api/v1/users/",
+											"protocol": "https",
+											"host": [
+												"api",
+												"escuelajs",
+												"co"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Creating user with invalid avatar type",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\"), function(){\r",
+													"    pm.response.to.have.status(400);\r",
+													"};\r",
+													"\r",
+													"const jsonData = pm.response.json();\r",
+													"\r",
+													"pm.test(\"Message to contain less than 4 characters is not acceptable\", function(){\r",
+													"    pm.expect(jsonData.message).to.include(\"avatar must be a URL address\")\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"NicoWilliam\",\r\n  \"email\": \"nicowilly@gmail.com\",\r\n  \"password\":\"abc456\",\r\n  \"avatar\": \"44\",\r\n  \"hobby\" : \"testhobby\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://api.escuelajs.co/api/v1/users/",
+											"protocol": "https",
+											"host": [
+												"api",
+												"escuelajs",
+												"co"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "CreatingUser with less than 3 characters",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\"), function(){\r",
+													"    pm.response.to.have.status(400);\r",
+													"};\r",
+													"\r",
+													"const jsonData = pm.response.json();\r",
+													"\r",
+													"pm.test(\"Message to contain less than 4 characters is not acceptable\", function(){\r",
+													"    pm.expect(jsonData.message.length).to.eql(1);\r",
+													"    pm.expect(jsonData.message).to.include(\"password must be longer than or equal to 4 characters\")\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"NicoWilliams1\",\r\n  \"email\": \"nicowilly@gmail.com\",\r\n  \"password\": \"ab1\",\r\n  \"avatar\": \"https://picsum.photos/800\",\r\n  \"hobby\" : \"testhobby\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://api.escuelajs.co/api/v1/users/",
+											"protocol": "https",
+											"host": [
+												"api",
+												"escuelajs",
+												"co"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create duplicate users",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test('Status code to be 400'), function() {\r",
+													"    pm.response.to.have.status(400);\r",
+													"}"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"NicoWilliams1\",\r\n  \"email\": \"nicowilly@gmail.com\",\r\n  \"password\": \"abcd1234\",\r\n  \"avatar\": \"https://picsum.photos/800\",\r\n  \"hobby\" : \"testhobby\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://api.escuelajs.co/api/v1/users/",
+											"protocol": "https",
+											"host": [
+												"api",
+												"escuelajs",
+												"co"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												""
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "LoginRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check whether the body contains access token\"), function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(jsonData).to.have.property(\"access_token\");\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Check whether the body contains refresh token\"), function(){\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(jsonData).to.have.property(\"refresh_token\");\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code to be 201\"), function() {\r",
+									"    pm.response.to.have.status(201);\r",
+									"}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"nico@gmail.com\",\r\n  \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.escuelajs.co/api/v1/auth/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"escuelajs",
+								"co"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check the status of the code\r",
+									"pm.test(\"Status Code to be 200\"), function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Response time to be less than 500ms\"), function() {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500)\r",
+									"}\r",
+									"// Check whether the response is JSON or not\r",
+									"pm.test(\"Response to be a JSON\"), function() {\r",
+									"    pm.response.to.have.header(\"Content-Type\")\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"}\r",
+									"\r",
+									"// Check Response is an array of users\r",
+									"\r",
+									"pm.test(\"Response to be an array\"), function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"}\r",
+									"\r",
+									"// Check each user has required fields \r",
+									"pm.test(\"Each user to have id, email and password\"), function(){\r",
+									"    var jsonData = pm.response.json();\r",
+									"    jsonData.forEach(function(user){\r",
+									"        pm.expect(user).to.have.property(\"id\");\r",
+									"        pm.expect(user).to.have.property(\"email\");\r",
+									"        pm.expect(user).to.have.property(\"name\");\r",
+									"    });\r",
+									"}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://api.escuelajs.co/api/v1/users",
+							"protocol": "https",
+							"host": [
+								"api",
+								"escuelajs",
+								"co"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check availability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code to be 201\"), function() {\r",
+									"    pm.response.to.have.status(201);    \r",
+									"}\r",
+									"\r",
+									"pm.test(\"Reponse time within 500ms\"), function() {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Response body to have 'is isAvailable' property\"), function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"isAvailable\");\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"nico@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.escuelajs.co/api/v1/users/is-available",
+							"protocol": "https",
+							"host": [
+								"api",
+								"escuelajs",
+								"co"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"is-available"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check the status of the code\r",
+									"pm.test(\"Status Code to be 200\"), function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Response time to be less than 500ms\"), function() {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500)\r",
+									"}\r",
+									"// Check whether the response is JSON or not\r",
+									"pm.test(\"Response to be a JSON\"), function() {\r",
+									"    pm.response.to.have.header(\"Content-Type\")\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"}\r",
+									"\r",
+									"// Check Response is an array of users\r",
+									"\r",
+									"pm.test(\"Response to be an array\"), function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"}\r",
+									"\r",
+									"// Check each user has required fields \r",
+									"\r",
+									"pm.test(\"The user to have id, email and password\"), function(){\r",
+									"    var jsonData = pm.response.json();\r",
+									"        pm.expect(jsonData.response).to.have.property(\"id\");\r",
+									"        pm.expect(jsonData.response).to.have.property(\"email\");\r",
+									"        pm.expect(jsonData.response).to.have.property(\"name\");\r",
+									"\r",
+									"}\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"nico@gmail.com\",\r\n  \"password\": \"1234\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api.escuelajs.co/api/v1/products/40",
+							"protocol": "https",
+							"host": [
+								"api",
+								"escuelajs",
+								"co"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"40"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
