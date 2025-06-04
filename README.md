@@ -34,8 +34,10 @@ newman run collections/Test-project-api.postman_collection.json
 1. Go to the project root directory
 2. Open command prompt
 3. Enter the following script
+
+Test execution and Report generation command
    ```bash
    newman run collections/Test-project-api.postman_collection.json -r html --reporter-html-export Report.html
    ```
-4. Report.html is the html-report generated in the project root directory.
+5. Report.html is the html-report generated in the project root directory.
 
