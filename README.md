@@ -5,7 +5,7 @@ This repository contains automated API tests using [Postman](https://www.postman
 ## File Structure
 
 - `collections/`: Contains exported Postman test collections (v2.1).
-- `environments/`: (Optional) Postman environments for different environments like `dev`, `staging`, etc.
+- `environments/`: Postman environments for future different environments like `dev`, `staging`, etc.
 - `.github/workflows/`: Contains the GitHub Actions workflow to run Newman tests on every push.
 
 ## ▶️ Running Tests Locally with Newman
